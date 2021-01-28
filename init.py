@@ -239,7 +239,7 @@ météorologique d'Helsinki.
 print(df_helHar)
 
 print(df_helMal)
-
+"""
 plot_test_1 = df_helHar.plot(y="Air temperature (degC)",title="Température enregistrée à Helsinki Harmaja")
 plot_test_1.set_xlabel("Jour")
 plot_test_1.set_ylabel("Température °C")
@@ -273,6 +273,61 @@ plt.show(block=True)
 
 df_climat_hel = df_helHar["Air temperature (degC)"] - df_climat_flatten[0]
 df_climat_hel.plot()
+"""
+
+"""Savukoski kirkonkyla :"""
+df =pd.DataFrame(np.abs(df_savKir["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
+df.rename(columns = {0:'Données annuelles'},inplace=True)
+plot = df.plot(figsize=(10,10))
+plt.subplots_adjust(bottom=0.2)
+tt = plt.title(f"Différence avec Savukoski kirkonkyla")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
+text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+text_box.set_active(False)
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show(block=True)
+
+"""Helsinki Harmaja :"""
+df =pd.DataFrame(np.abs(df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
+df.rename(columns = {0:'Données annuelles'},inplace=True)
+plot = df.plot(figsize=(10,10))
+plt.subplots_adjust(bottom=0.2)
+tt = plt.title(f"Différence avec Helsinki Harmaja")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
+text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+text_box.set_active(False)
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show(block=True)
+
+"""Helsinki Malmi lentokenttä :"""
+df =pd.DataFrame(np.abs(df_helMal["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
+df.rename(columns = {0:'Données annuelles'},inplace=True)
+plot = df.plot(figsize=(10,10))
+plt.subplots_adjust(bottom=0.2)
+tt = plt.title(f"Différence avec Helsinki Malmi lentokenttä")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
+text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+text_box.set_active(False)
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show(block=True)
+
+
+"""Climat SI -erreur :"""
+df =pd.DataFrame(np.abs(df_climat_error_flatten['Données annuelles']-df_climat_flatten['Données annuelles']))
+df.rename(columns = {0:'Données annuelles'},inplace=True)
+plot = df.plot(figsize=(10,10))
+plt.subplots_adjust(bottom=0.2)
+tt = plt.title(f"Différence avec Climat SI -erreur")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
+text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+text_box.set_active(False)
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show(block=True)
+
 
 """
 En comparant les données d'Helsinki que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.

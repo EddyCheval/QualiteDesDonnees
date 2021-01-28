@@ -1,19 +1,20 @@
 def update_annot(event,annot,df):
   annot.xy = (round(event.xdata,0),round(event.ydata,0))
   valIndex = int(round(event.xdata))
-  text = "Moyenne de la période de 30 jours centrés : {} \n" \
+  text = "Moyenne de la période \nde 30 jours centrés : {} \n" \
          "Valeur du jour {} : {} °C".format(
           int(round(df.loc[valIndex-15:valIndex+15].mean())),
           valIndex,
           int(round(event.ydata)))
   annot.set_text(text)
   annot.get_bbox_patch().set_alpha(0.4)
+  annot.set_fontsize(10)
 
 def hover(event,annot,fig,df,ax,plot):
   vis = annot.get_visible()
   isAReelValue = False
   if event.xdata != None and int(round(event.xdata)) in df.index.values :
-    if df[0][int(round(event.xdata))] == int(round(event.ydata)):
+    if df['Données annuelles'][int(round(event.xdata))] == int(round(event.ydata)):
       isAReelValue = True
   if event.inaxes == ax:
     cont = plot.contains(event)
