@@ -26,6 +26,18 @@ df_grece=pd.read_csv("./data/export-athenes2018.csv", skiprows=3)
 df_grece['TEMPERATURE'] = df_grece[["MIN_TEMPERATURE_C","MAX_TEMPERATURE_C"]].mean(axis=1) #Getting the average temperature of each day
 df_grece = df_grece[['DATE', 'TEMPERATURE']]
 
+df_suede=pd.read_csv("./data/export-stockholm2018.csv", skiprows=3)
+df_suede['TEMPERATURE'] = df_suede[["MIN_TEMPERATURE_C","MAX_TEMPERATURE_C"]].mean(axis=1) #Getting the average temperature of each day
+df_suede = df_suede[['DATE', 'TEMPERATURE']]
+
+df_estonie=pd.read_csv("./data/export-tallinn2018.csv", skiprows=3)
+df_estonie['TEMPERATURE'] = df_estonie[["MIN_TEMPERATURE_C","MAX_TEMPERATURE_C"]].mean(axis=1) #Getting the average temperature of each day
+df_estonie = df_estonie[['DATE', 'TEMPERATURE']]
+
+df_lettonie=pd.read_csv("./data/export-riga2018.csv", skiprows=3)
+df_lettonie['TEMPERATURE'] = df_lettonie[["MIN_TEMPERATURE_C","MAX_TEMPERATURE_C"]].mean(axis=1) #Getting the average temperature of each day
+df_lettonie = df_lettonie[['DATE', 'TEMPERATURE']]
+
 """
 Statistiques fichier climat.xls Si
 """
@@ -49,19 +61,20 @@ Premier Graphique : Climat.xls SI (vue par mois)
 """
 
 fig, ax = plt.subplots(figsize=(10,10))
+fig.canvas.set_window_title('Température de climat.xls (SI)')
 plot_mois, = plt.plot(range(1, 32, 1),df_climat["janvier"])
 plt.subplots_adjust(bottom=0.2)
 plt.xlabel("Jour")
 plt.ylabel("Température °C")
 plt.axis([1, 31, -25, 30])
-tt = plt.title(f"Température du mois de Janvier (SI)")
+tt = plt.title(f"Température du mois de Janvier")
 axbox = plt.axes([0.19, 0.05, 0.3, 0.1])
 axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
 text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],std_per_month[0],mean_per_month[0]))
 text_box.set_active(False)
 text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),df_climat.stack().std() ,mean_per_month.mean()))
 text_box_2.set_active(False)
-callback = Index(plot_mois, df_climat,text_box)
+callback = Index(plot_mois, df_climat,text_box,tt,plt,min_per_month,max_per_month,std_per_month,mean_per_month)
 axprev = plt.axes([0.70, 0.9, 0.075, 0.05])
 axnext = plt.axes([0.78, 0.9, 0.075, 0.05])
 bnext = Button(axnext, 'Next')
@@ -80,6 +93,7 @@ x = df_climat.values.flatten('F')
 df_climat_flatten = pd.DataFrame(x[~np.isnan(x)])
 df_climat_flatten=df_climat_flatten.rename(columns = {0:'Données annuelles'})
 fig, ax = plt.subplots()
+fig.canvas.set_window_title('Température annuelle de climat.xls (SI)')
 plot_annee = df_climat_flatten.plot(figsize=(10,10),title="Température de l'année",ax=ax,label="données")
 plot_annee.set_xlabel("Jour")
 plot_annee.set_ylabel("Température °C")
@@ -144,6 +158,7 @@ Troisième Graphique : Climat.xls SI -erreur (vue par mois)
 """
 
 fig, ax = plt.subplots(figsize=(10,10))
+fig.canvas.set_window_title('Température de climat.xls (SI -erreur)')
 plot_mois_erreur, = plt.plot(range(1, 32, 1),df_climat_error["janvier"])
 plt.subplots_adjust(bottom=0.2)
 plt.xlabel("Jour")
@@ -155,9 +170,9 @@ axbox = plt.axes([0.19, 0.05, 0.3, 0.1])
 axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
 text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],std_per_month[0],mean_per_month[0]))
 text_box.set_active(False)
-text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.mean(),df_climat.stack().std() ,mean_per_month.mean()))
+text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.mean(),round(df_climat.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box_2.set_active(False)
-callback = Index(plot_mois_erreur, df_climat_error,text_box)
+callback = Index(plot_mois_erreur, df_climat_error,text_box,tt,plt,min_per_month,max_per_month,std_per_month,mean_per_month)
 axprev = plt.axes([0.7, 0.9, 0.1, 0.075])
 axnext = plt.axes([0.81, 0.9, 0.1, 0.075])
 bnext = Button(axnext, 'Next')
@@ -202,6 +217,7 @@ df_climat_error_flatten = pd.DataFrame(x[~np.isnan(x)])
 df_climat_error_flatten=df_climat_error_flatten.rename(columns = {0:'Données annuelles'})
 fig, ax = plt.subplots()
 
+fig.canvas.set_window_title('Température annuelle de climat.xls (SI -erreur)')
 plot_annee_erreur = df_climat_error_flatten.plot(figsize=(10,10),title="Température de l'année (SI - erreur)",ax=ax)
 plot_annee_erreur.set_xlabel("Jour")
 plot_annee_erreur.set_ylabel("Température °C")
@@ -209,7 +225,7 @@ plot_annee_erreur.set_ylabel("Température °C")
 axbox = plt.axes([0.19, 0.05, 0.3, 0.1])
 axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
 plt.subplots_adjust(bottom=0.2)
-text_box = TextBox(axbox, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),df_climat.stack().std() ,mean_per_month.mean()))
+text_box = TextBox(axbox, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),round(df_climat_error.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box.set_active(False)
 text_box_2 = TextBox(axbox2, '', initial="Différence SI et SI -erreur : \nDifférence moyenne : {} \nMoyennes des différences : {}".format(real_mean_year,diff_mean_year))
 text_box_2.set_active(False)
@@ -234,145 +250,118 @@ Comparatif données climats avec savukoski et capitals européennes (Helsinki...
 print(df_savKir)
 
 
-plot_test_3 = df_savKir.plot(y="Air temperature (degC)",title="Température enregistrée à Savukoski")
+fig, ax = plt.subplots()
+df = pd.DataFrame([]);
+fig.canvas.set_window_title('Comparaison des températures en climat.xls avec savukoski')
+df["savukoski"] =df_savKir['Air temperature (degC)']
+df["Temoin"] =df_climat_flatten['Données annuelles']
+plot_test_3 = df.plot(figsize=(20,10))
 plot_test_3.set_xlabel("Jour")
 plot_test_3.set_ylabel("Température °C")
-plt.show(block=True)
+tt = plt.title(f"Différence de température entre climat.xls et savukoski")
+plt.show()
+plt.pause(0.001)
+input("Press [enter] to continue.")
 
 """
 En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut constater que la température est plus rude chez Savukoski Kirkonkyla et 
 donc que la position de climat.xls doit être plus au sud. 
 Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données
-météorologique d'Helsinki.
-"""
-print(df_helHar)
-
-print(df_helMal)
-"""
-plot_test_1 = df_helHar.plot(y="Air temperature (degC)",title="Température enregistrée à Helsinki Harmaja")
-plot_test_1.set_xlabel("Jour")
-plot_test_1.set_ylabel("Température °C")
-plt.show(block=True)
-
-plot_test_2 = df_helMal.plot(y="Air temperature (degC)",title="Température enregistrée à Helsinki Malmi Lentokenttä")
-plot_test_2.set_xlabel("Jour")
-plot_test_2.set_ylabel("Température °C")
-plt.show(block=True)
-
-
-df_finland_minus = df_helHar
-df_finland_minus["Air temperature (degC)"] = df_helHar["Air temperature (degC)"] - df_savKir["Air temperature (degC)"]
-plot_test_4 = df_finland_minus.plot(y="Air temperature (degC)",title="Différentiel en température à Helsinki Harmaja et Savukoski")
-plot_test_4.set_xlabel("Jour")
-plot_test_4.set_ylabel("Température °C")
-plt.show(block=True)
-
-df_finland_minus_2 = df_helHar
-df_finland_minus_2["Air temperature (degC)"] = df_helMal["Air temperature (degC)"] - df_savKir["Air temperature (degC)"]
-df_finland_minus_2.plot(y="Air temperature (degC)",title="Différentiel en temperature à Helsinki Malmi Lentokenttä et Savukoski")
-plot_test_4.set_xlabel("Jour")
-plot_test_4.set_ylabel("Température °C")
-plt.show(block=True)
-
-df_climat_savKir = df_climat_flatten[0] - df_savKir["Air temperature (degC)"]
-plot_test_5 = df_climat_savKir.plot(title="Différentiel en température du fichier climat et savukoski")
-plot_test_5.set_xlabel("Jour")
-plot_test_5.set_ylabel("Température °C")
-plt.show(block=True)
-
-df_climat_hel = df_helHar["Air temperature (degC)"] - df_climat_flatten[0]
-df_climat_hel.plot()
+météorologique d'Helsinki et d'autres capitales européennes.
 """
 
-"""Savukoski kirkonkyla :"""
-df =pd.DataFrame(np.abs(df_savKir["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Savukoski kirkonkyla")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+"""Température annuelle des différentes captiales"""
+df = pd.DataFrame([]);
+df["Paris"] =df_france["tmoy"]
+df["Athenes"] =df_grece["TEMPERATURE"]
+df["Helsinki"] =df_helHar["Air temperature (degC)"]
+df["Stockholm"] =df_suede["TEMPERATURE"]
+df["Tallinn"] =df_estonie["TEMPERATURE"]
+df["Riga"] =df_lettonie["TEMPERATURE"]
+df["Temoin"] =df_climat_flatten['Données annuelles']
+plot = df.plot(figsize=(20,10))
+tt = plt.title(f"Temperature annuelle en europe ")
 text_box.set_active(False)
 plot.set_xlabel("Jour")
 plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
+plt.show()
+plt.pause(0.001)
+input("Press [enter] to continue.")
 
-"""Helsinki Harmaja :"""
-df =pd.DataFrame(np.abs(df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Helsinki Harmaja")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+
+"""Comparaison des différences de températures entre climat.xls et les capitales européennes"""
+df = pd.DataFrame([]);
+df["Paris"] =df_france["tmoy"]-df_climat_flatten['Données annuelles']
+df["Athenes"] =df_grece["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
+df["Stockholm"] =df_suede["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Tallinn"] =df_estonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Riga"] =df_lettonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Temoin"] =df_climat_flatten['Données annuelles']-df_climat_flatten['Données annuelles']
+plot = df.plot(figsize=(20,10))
+plt.subplots_adjust(bottom=0.3)
+tt = plt.title(f"Différence de température entre climat.xls et des capitales européennes ")
+
+axbox = plt.axes([0.2, 0.05, 0.65, 0.15])
+text_box = TextBox(axbox, '', initial="Statistique Paris          : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Athenes     : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Helsinki     : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Stockholm : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Tallinn       : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Riga          : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                    .format(round(np.abs(df["Paris"]).mean(),2),df["Paris"].max(),df["Paris"].min(),
+                                            round(np.abs(df["Athenes"]).mean(),2),df["Athenes"].max(),df["Athenes"].min(),
+                                            round(np.abs(df["Helsinki"]).mean(),2),df["Helsinki"].max(),df["Helsinki"].min(),
+                                            round(np.abs(df["Stockholm"]).mean(),2),df["Stockholm"].max(),df["Stockholm"].min(),
+                                            round(np.abs(df["Tallinn"]).mean(),2),df["Tallinn"].max(),df["Tallinn"].min(),
+                                            round(np.abs(df["Riga"]).mean(),2),df["Riga"].max(),df["Riga"].min()))
 text_box.set_active(False)
 plot.set_xlabel("Jour")
 plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
+plt.show()
+plt.pause(0.001)
+input("Press [enter] to continue.")
 
-"""Helsinki Malmi lentokenttä :"""
-df =pd.DataFrame(np.abs(df_helMal["Air temperature (degC)"]-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Helsinki Malmi lentokenttä")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
-text_box.set_active(False)
+
+"""Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
+fig, ax = plt.subplots()
+fig.canvas.set_window_title('Différence avec les capitales du nord-est')
+df = pd.DataFrame([]);
+df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
+df["Tallinn"] =df_estonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Riga"] =df_lettonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
+df["Temoin"] =df_climat_flatten['Données annuelles']-df_climat_flatten['Données annuelles']
+plot = df.plot(figsize=(20,10))
+plt.subplots_adjust(bottom=0.3)
+tt = plt.title(f"Différence  de température entre climat.xls et des capitales européennes (proches)")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.15])
+text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Tallinn       : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                      "Statistique Riga          : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
+                                    .format(round(np.abs(df["Helsinki"]).mean(),2),df["Helsinki"].max(),df["Helsinki"].min(),
+                                            round(np.abs(df["Tallinn"]).mean(),2),df["Tallinn"].max(),df["Tallinn"].min(),
+                                            round(np.abs(df["Riga"]).mean(),2),df["Riga"].max(),df["Riga"].min()))
 plot.set_xlabel("Jour")
 plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
+plt.show()
 
-"""Paris"""
-df =pd.DataFrame(np.abs(df_france["tmoy"]-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Paris")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
-text_box.set_active(False)
-plot.set_xlabel("Jour")
-plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
-
-"""Athenes"""
-df =pd.DataFrame(np.abs(df_grece["TEMPERATURE"]-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Athènes")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
-text_box.set_active(False)
-plot.set_xlabel("Jour")
-plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
-
-"""Climat SI -erreur :"""
-df =pd.DataFrame(np.abs(df_climat_error_flatten['Données annuelles']-df_climat_flatten['Données annuelles']))
-df.rename(columns = {0:'Données annuelles'},inplace=True)
-plot = df.plot(figsize=(10,10))
-plt.subplots_adjust(bottom=0.2)
-tt = plt.title(f"Différence avec Climat SI -erreur")
-axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
-text_box.set_active(False)
-plot.set_xlabel("Jour")
-plot.set_ylabel("Différence de température °C")
-plt.show(block=True)
-
+plt.pause(0.001)
+input("Press [enter] to continue.")
 
 """
-En comparant les données d'Helsinki que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.
+En comparant les données d'Helsinki et d'autres capitales que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.
 En effet, nous pouvons voir des similitudes entre les courbes du climat et des données trouvées sur Internet 
-(Malgré quelques décalages notamment sur le pique de froid du début d'année. On peut supposer qu'il s'agit d'une année différente.) 
+(Malgré quelques décalages notamment sur le pique de froid du début d'année. On peut supposer qu'il s'agit d'une année différente ou de données alterées.) 
 mais également des similitudes au niveau des maximums et minimums.
 
-Nous constatons 5°C supplémentaire en moyenne à Helsinki avec un début d'année beaucoup plus chaud.
-Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien.
+Nous constatons 5°C de différence en moyenne à Helsinki avec un début d'année beaucoup plus chaud comme la pluspart des capitales testées.
+Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien contrairement à la courbe de paris ou athenes qui sont constamment au dessus.
 Elles sont donc probablement situées dans la même région du monde (dans notre cas la Finlande). 
-Le climat est de type continental. On peut noter que Helsinki est plus proche d'un climat continental 
+
+Pour ce qui est de Savukoski, cela concorde avec nos hypothèses. Le climat finlandais est de type continental. On peut noter que Helsinki est plus proche d'un climat continental 
 humide alors que Savukoski est plus proche d'un climat continental froid ce qui peut expliquer les différentes en 
-terme de température mais également les similitudes entre les courbes.
+terme de température, mais également les similitudes entre les courbes et renforce donc notre hypothèse comme quoi il s'agit de Helsinki.
+Toutefois, il peut s'agir de Riga ou Tallinn les capitales de la Lettonie et Estonie qui sont très proches géographiquement. Et il ne faut 
+pas omettre qu'il existe d'autres capitales, que les données ne sont potentiellement pas sur les mêmes années de données et que rien ne garantir l'intégrité de nos données comme de ceux 
+de nos sources extérieures.
 """

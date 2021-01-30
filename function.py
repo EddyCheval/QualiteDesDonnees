@@ -1,7 +1,7 @@
 def update_annot(event,annot,df):
   annot.xy = (round(event.xdata,0),round(event.ydata,0))
   valIndex = int(round(event.xdata))
-  text = "Moyenne de la période \nde 30 jours centrés : {} \n" \
+  text = "Moyenne de la période \nde 30 jours centrés : {} °C\n" \
          "Valeur du jour {} : {} °C".format(
           int(round(df.loc[valIndex-15:valIndex+15].mean())),
           valIndex,
