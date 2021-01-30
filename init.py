@@ -17,9 +17,14 @@ df_helMal=pd.read_excel("./data/Helsinki Malmi lentokenttä.xlsx",sheet_name='Ob
 df_france=pd.read_csv("./data/temperature-quotidienne-departementale.csv")
 df_climat_error=pd.read_excel("./data/Climat.xlsx",dtype={'pctapi':np.int64}, skiprows=2,header=0, usecols="D:O",nrows=32,sheet_name='SI -erreur')
 df_climat.drop(0, inplace=True)
+
 df_france=pd.read_csv("./data/temperature-quotidienne-departementale.csv", sep=";")
-df_france=df_france.loc[df_france['departement'] == 'Paris'].loc[df_france['date_obs'] >= '2020-01-01'].sort_values(by=['date_obs'],ascending=True)[['date_obs', 'tmoy']]
+df_france=df_france.loc[df_france['departement'] == 'Paris'].loc[df_france['date_obs'].str.contains('2018')].sort_values(by=['date_obs'],ascending=True)[['date_obs', 'tmoy']]
 df_france = df_france.reset_index(drop=True)
+
+df_grece=pd.read_csv("./data/export-athenes2018.csv", skiprows=3)
+df_grece['TEMPERATURE'] = df_grece[["MIN_TEMPERATURE_C","MAX_TEMPERATURE_C"]].mean(axis=1) #Getting the average temperature of each day
+df_grece = df_grece[['DATE', 'TEMPERATURE']]
 
 """
 Statistiques fichier climat.xls Si
@@ -324,6 +329,19 @@ df.rename(columns = {0:'Données annuelles'},inplace=True)
 plot = df.plot(figsize=(10,10))
 plt.subplots_adjust(bottom=0.2)
 tt = plt.title(f"Différence avec Paris")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
+text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
+text_box.set_active(False)
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show(block=True)
+
+"""Athenes"""
+df =pd.DataFrame(np.abs(df_grece["TEMPERATURE"]-df_climat_flatten['Données annuelles']))
+df.rename(columns = {0:'Données annuelles'},inplace=True)
+plot = df.plot(figsize=(10,10))
+plt.subplots_adjust(bottom=0.2)
+tt = plt.title(f"Différence avec Athènes")
 axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
 text_box = TextBox(axbox, '', initial="Statistique  : \nDifférence moyenne : {} \nDifférence maximun : {}".format(df['Données annuelles'].mean(),df['Données annuelles'].max()))
 text_box.set_active(False)
