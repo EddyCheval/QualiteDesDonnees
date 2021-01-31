@@ -70,9 +70,9 @@ plt.axis([1, 31, -25, 30])
 tt = plt.title(f"Température du mois de Janvier")
 axbox = plt.axes([0.19, 0.05, 0.3, 0.1])
 axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],std_per_month[0],mean_per_month[0]))
+text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],round(std_per_month[0],2),round(mean_per_month[0],2)))
 text_box.set_active(False)
-text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),df_climat.stack().std() ,mean_per_month.mean()))
+text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),round(df_climat.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box_2.set_active(False)
 callback = Index(plot_mois, df_climat,text_box,tt,plt,min_per_month,max_per_month,std_per_month,mean_per_month)
 axprev = plt.axes([0.70, 0.9, 0.075, 0.05])
@@ -99,7 +99,7 @@ plot_annee.set_xlabel("Jour")
 plot_annee.set_ylabel("Température °C")
 axbox = plt.axes([0.2, 0.05, 0.65, 0.1])
 plt.subplots_adjust(bottom=0.2)
-text_box_2 = TextBox(axbox, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),df_climat.stack().std() ,mean_per_month.mean()))
+text_box_2 = TextBox(axbox, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),round(df_climat.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box_2.set_active(False)
 annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
                     bbox=dict(boxstyle="round", fc="w"),
@@ -142,9 +142,9 @@ Statistiques fichier climat.xls Si -erreur
 """
 
 
-mean_per_month = np.mean(df_climat)
+mean_per_month = np.mean(df_climat_error)
 print("Moyenne par mois :", np.mean(df_climat_error))
-std_per_month = np.std(df_climat)
+std_per_month = np.std(df_climat_error)
 print("Ecart-type par mois :", np.std(df_climat_error))
 min_per_month = np.min(df_climat_error)
 print("Minimum par mois :", min_per_month)
@@ -168,9 +168,9 @@ tt = plt.title(f"Température du mois de Janvier")
 
 axbox = plt.axes([0.19, 0.05, 0.3, 0.1])
 axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
-text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],std_per_month[0],mean_per_month[0]))
+text_box = TextBox(axbox, '', initial="Statistique du mois de Janvier : \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month[0],max_per_month[0],round(std_per_month[0],2),round(mean_per_month[0],2)))
 text_box.set_active(False)
-text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.mean(),round(df_climat.stack().std(),2) ,round(mean_per_month.mean(),2)))
+text_box_2 = TextBox(axbox2, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),round(df_climat.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box_2.set_active(False)
 callback = Index(plot_mois_erreur, df_climat_error,text_box,tt,plt,min_per_month,max_per_month,std_per_month,mean_per_month)
 axprev = plt.axes([0.7, 0.9, 0.1, 0.075])
@@ -201,7 +201,7 @@ diff_mean_year = round(np.mean(zero_as_nan[~np.isnan(zero_as_nan)]),2)
 real_mean_year = round(np.mean(no_nan[~np.isnan(no_nan)]),2)
 print(real_mean_year)
 print(diff_mean_year)
-
+print(np.max(np.abs(zero_as_nan[~np.isnan(zero_as_nan)])))
 """
 On remarque, une fois les moyennes faites, qu'à l'échelle de la donnée annuel la différence est moindre (-0.011) et que les différences en questions sont très proches de 0 avec une moyenne de -0.6 °C. 
 La donnée est donc globalement fiable même après la correction des erreurs.
@@ -227,7 +227,7 @@ axbox2 = plt.axes([0.53, 0.05, 0.3, 0.1])
 plt.subplots_adjust(bottom=0.2)
 text_box = TextBox(axbox, '', initial="Statistique de l'année: \nMin : {} \nMax : {} \nEcart-Type : {} \nMoyenne : {}".format(min_per_month.min(),max_per_month.max(),round(df_climat_error.stack().std(),2) ,round(mean_per_month.mean(),2)))
 text_box.set_active(False)
-text_box_2 = TextBox(axbox2, '', initial="Différence SI et SI -erreur : \nDifférence moyenne : {} \nMoyennes des différences : {}".format(real_mean_year,diff_mean_year))
+text_box_2 = TextBox(axbox2, '', initial="Différence SI et SI -erreur : \nDifférence moyenne : {} \nMoyennes des différences : {}\nDifférence max : {}".format(real_mean_year,diff_mean_year,np.max(np.abs(zero_as_nan[~np.isnan(zero_as_nan)]))))
 text_box_2.set_active(False)
 
 annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
@@ -250,9 +250,7 @@ Comparatif données climats avec savukoski et capitals européennes (Helsinki...
 print(df_savKir)
 
 
-fig, ax = plt.subplots()
-df = pd.DataFrame([]);
-fig.canvas.set_window_title('Comparaison des températures en climat.xls avec savukoski')
+df = pd.DataFrame([])
 df["savukoski"] =df_savKir['Air temperature (degC)']
 df["Temoin"] =df_climat_flatten['Données annuelles']
 plot_test_3 = df.plot(figsize=(20,10))
@@ -271,7 +269,7 @@ météorologique d'Helsinki et d'autres capitales européennes.
 """
 
 """Température annuelle des différentes captiales"""
-df = pd.DataFrame([]);
+df = pd.DataFrame([])
 df["Paris"] =df_france["tmoy"]
 df["Athenes"] =df_grece["TEMPERATURE"]
 df["Helsinki"] =df_helHar["Air temperature (degC)"]
@@ -290,7 +288,7 @@ input("Press [enter] to continue.")
 
 
 """Comparaison des différences de températures entre climat.xls et les capitales européennes"""
-df = pd.DataFrame([]);
+df = pd.DataFrame([])
 df["Paris"] =df_france["tmoy"]-df_climat_flatten['Données annuelles']
 df["Athenes"] =df_grece["TEMPERATURE"]-df_climat_flatten['Données annuelles']
 df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
@@ -324,9 +322,7 @@ input("Press [enter] to continue.")
 
 
 """Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
-fig, ax = plt.subplots()
-fig.canvas.set_window_title('Différence avec les capitales du nord-est')
-df = pd.DataFrame([]);
+df = pd.DataFrame([])
 df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
 df["Tallinn"] =df_estonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
 df["Riga"] =df_lettonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
