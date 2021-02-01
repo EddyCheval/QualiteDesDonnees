@@ -1,4 +1,4 @@
-# Module **Qualité Des Donnees**
+# Module **Qualité Des Données**
 
 Projet réalisé par **Eddy CHEVAL** & **Alban GUILLET**, EPSI Nantes I2 Classe 2 2020-2021.
 
