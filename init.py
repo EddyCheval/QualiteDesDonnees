@@ -91,6 +91,7 @@ Deuxième Graphique : Climat.xls SI (vue annuelle interactive)
 
 x = df_climat.values.flatten('F')
 df_climat_flatten = pd.DataFrame(x[~np.isnan(x)])
+print(len(df_climat_flatten))
 df_climat_flatten=df_climat_flatten.rename(columns = {0:'Données annuelles'})
 fig, ax = plt.subplots()
 fig.canvas.set_window_title('Température annuelle de climat.xls (SI)')

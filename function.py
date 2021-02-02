@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 import numpy as np
+import pandas as pd
 
 def update_annot(event,annot,df):
   annot.xy = (round(event.xdata,0),round(event.ydata,0))
@@ -35,7 +37,6 @@ def suppr_outliners(series):
   IQR = Q3 - Q1
   return series[series.between(Q1-3*IQR,Q3+3*IQR)] #la valeur 3 est modifiée en fonction du seuil que l'on veux définir comme outliner
 
-
 def get_area_between_curves(df_pays, df_climat):
   x = df_pays.index
   y1 = df_pays.to_numpy()
@@ -53,3 +54,35 @@ def get_area_between_curves(df_pays, df_climat):
 
   areas = np.where(cross_test < 0, areas_neg, areas_pos)
   return np.sum(areas)
+
+def scoring(initialDataframe,dfCollection,ctCollection):
+  score = []
+  x = initialDataframe.values.flatten('F')
+  flatInitDf = pd.DataFrame(x[~np.isnan(x)])
+  numberOfDay = initialDataframe.count()
+  means = initialDataframe.mean()
+  for df,name in zip(dfCollection,ctCollection):
+    monthDiff = []
+    currentDay = 0
+    actualScore = 0
+    for month in initialDataframe.columns:
+      monthMean = means[month]
+      currentMean =  df.loc[currentDay:currentDay+numberOfDay[month],"Données annuelles"].mean()
+      value = currentMean - monthMean
+      monthDiff.append(value)
+      currentDay += numberOfDay[month]
+    diff = df["Données annuelles"] - flatInitDf[0]
+    mean = diff.mean()
+    corr = flatInitDf[0].corr(df["Données annuelles"])
+    area = get_area_between_curves(df["Données annuelles"],flatInitDf[0])
+    actualScore = np.abs(mean * 100) + (1-corr)*1000 + area
+    meansum = 0
+    for value in monthDiff:
+      actualScore += np.abs(value) *10
+      meansum += np.abs(value) *10
+    score.append([name,actualScore])
+    print("area : {}".format(area))
+    print("mean : {}".format(np.abs(mean * 100)))
+    print("mean per month : {}".format(meansum))
+    print("corr : {}".format((1-corr)*1000))
+  return score
