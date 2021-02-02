@@ -98,8 +98,7 @@ Nous avons cherché différents facteurs permettant de détecter auprès de quel
 ![Scoring](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_resultats_scores.PNG?raw=true)
 
 Cependant, il est important de noter que ce résultat se base uniquement sur les données que nous avions et que de ce fait, il existe peut-être une ville qui aurait un score plus proche de notre ville témoin. De plus, nous avons essayé d'utiliser les données datant de l'année 2018. Il se peut que nous ayons utilisé des données qui ne correspondaient pas à la même année et que les données que nous avons utilisés soient erronnés.
-
-
+De plus, nous n'avons pas la prétention d'être des experts en mathématiques, il se peut donc que les méthodes employées aurait pus être optimisé et que la construction du score aurait pus être abordé d'une meilleure façon. Toutefois, le résultat nous semble cohérent à notre échelle.
 # Sources de données
 - https://en.ilmatieteenlaitos.fi/download-observations
 - https://www.historique-meteo.net/europe/lettonie/riga/2018/
