@@ -96,7 +96,7 @@ Ainsi, afin d'avoir un résultat correct, nous avons choisi de mettre en place u
 #### Conclusion
 Nous avons cherché différents facteurs permettant de détecter auprès de quelle capitale européenne le climat de notre ville témoin se rapproche. La mise en place du score permet d'agglomérer les résultats que nous avions obtenu auparavant. La différence entre les villes de l'Europe du Nord sont assez similaire du au fait qu'elles sont proches les unes des autres et surtout de notre témoin. Les villes plus éloignés, comme Paris et Athènes pour le coup ont bien un score éloigné de notre jeu de données. Au final, la ville la plus proche de notre témoin est celle de Helsinski, la capitale de la Finlande.
 
-![Scoring](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_resultats_scores.PNG?raw=true)
+![Scoring](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_resultats_score.PNG?raw=true)
 
 Cependant, il est important de noter que ce résultat se base uniquement sur les données que nous avions et que de ce fait, il existe peut-être une ville qui aurait un score plus proche de notre ville témoin. De plus, nous avons essayé d'utiliser les données datant de l'année 2018. Il se peut que nous ayons utilisé des données qui ne correspondaient pas à la même année et que les données que nous avons utilisés soient erronnés.
 
