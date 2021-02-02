@@ -59,11 +59,11 @@ donc que la position de climat.xls doit être plus au sud.
 Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données météorologique d'Helsinki et d'autres capitales européennes.
 
 Parmis ces capitales, nous avons choisit celles des pays suivants :
-- France & Grèce, des pays relativement éloignés afin de confirmer que notre jeu de données correspond bien à l'Europe du nord. Cela permet aussi de vérifier que nos calculs sont cohérent en utilisant des valeurs bien différentes.
+- France & Grèce, des pays relativement éloignés afin de confirmer que notre jeu de données correspond bien à l'Europe du Nord. Cela permet aussi de vérifier que nos calculs sont cohérent en utilisant des valeurs bien différentes.
 - Suède, Estonie, Lettonie, des pays de la même zone que notre jeu de données afin de situer un peu plus précisément le type de climat de celui-ci.
 
 En comparant les données d'Helsinki et d'autres capitales que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.
-En effet, nous pouvons voir des similitudes entre les courbes du climat et des données trouvées sur Internet 
+En effet, nous pouvons voir des similitudes entre les courbes du climat et des données trouvées sur Internet
 (Malgré quelques décalages notamment sur le pique de froid du début d'année. On peut supposer qu'il s'agit d'une année différente ou de données alterées.) 
 mais également des similitudes au niveau des maximums et minimums.
 
@@ -73,7 +73,7 @@ Elles sont donc probablement situées dans la même région du monde (dans notre
 
 ##### Analyse
 
-Une fois l'observation réalisée, notre choix s'est porté vers helsinki, mais nous n'avons pas de réelles données pour prouver ou réfutée notre hypothèse. Nous avons donc choisi de calculer quelques indicateurs pour pouvoir en tirer de réelles conclusions. Nous sommes donc partie sur trois indicateurs différents :
+Une fois l'observation réalisée, notre choix s'est porté vers Helsinki, mais nous n'avons pas de réelles données pour prouver ou réfutée notre hypothèse. Nous avons donc choisi de calculer quelques indicateurs pour pouvoir en tirer de réelles conclusions. Nous sommes donc partie sur trois indicateurs différents :
 
 - La moyenne des différences de température entre climat.xls et nos capitales (annuelle et mensuelle) 
 - Le coefficient de corrélation entre les séries de données
