@@ -30,7 +30,7 @@ Dans le jeu de données SI - erreur, on peut y distinguer deux types d'erreur :
 - Les erreurs de types (Exemple : Sun, 0xFFFF)
 - Les erreurs d'échelle (Exemple: 48°C,-33°C)
 
-Pour répondre à ces deux problématiques, nous allons employer deux méthodes :
+Pour répondre à ces deux problématiques, nous avons employé deux méthodes :
 - La première méthode consiste à convertir toutes les valeurs non-numérique en NaN
 - La seconde méthode consiste à utiliser l'écart interquartile pour évaluer si une valeur est incohérente vis-à-vis des valeurs du mois correspondant. 
 On définit l'incohérence en fonction d'un paramètre laissé à l'appréciation de chacun de la définition d'un outliner.(Dans notre cas la valeur est 3)
@@ -76,3 +76,12 @@ humide alors que Savukoski est plus proche d'un climat continental froid ce qui 
 terme de température, mais également les similitudes entre les courbes et renforce donc notre hypothèse comme quoi il s'agit de Helsinki.
 Toutefois, il peut s'agir de Riga ou Tallinn, les capitales de la Lettonie et Estonie qui sont très proches géographiquement. Et il ne faut 
 pas omettre qu'il existe d'autres capitales, que les données ne sont potentiellement pas sur les mêmes années de données et que rien ne garantir l'intégrité de nos données comme de ceux de nos sources extérieures.
+
+# Source de donnnées
+
+- https://en.ilmatieteenlaitos.fi/download-observations
+- https://www.historique-meteo.net/europe/lettonie/riga/2018/
+- https://www.historique-meteo.net/europe/estonie/tallinn/2018/
+- https://www.historique-meteo.net/europe/grece/athenes/2018/
+- https://www.historique-meteo.net/europe/suede/stockholm/2018/
+- https://www.data.gouv.fr/fr/datasets/temperature-quotidienne-departementale-depuis-janvier-2018/
