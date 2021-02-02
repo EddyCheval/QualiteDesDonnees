@@ -55,6 +55,7 @@ En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut const
 donc que la position de climat.xls doit être plus au sud. 
 Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données
 météorologique d'Helsinki et d'autres capitales européennes.
+
 Parmis ces capitales, nous avons choisit celles des pays suivants :
 - France & Grèce, des pays relativement éloignés afin de confirmer que notre jeu de données correspond bien à l'Europe du nord. Cela permet aussi de vérifier que nos calculs sont cohérent en utilisant des valeurs bien différentes.
 - Suède, Estonie, Lettonie, des pays de la même zone que notre jeu de données afin de situer un peu plus précisément le type de climat de celui-ci.
@@ -86,14 +87,12 @@ Nous avons aussi choisi de calculer l'aire entre les courbes de nos capitales et
 
 Ainsi, afin d'avoir un résultat correct, nous avons choisi de mettre en place un système de scoring. Ce score nous permettra de déterminer quelle sera la ville la plus proche et se base sur les diverses informations, obtenues précédemment. Pour cela, il nous a fallu définir l'importance de ses différents critères afin de pouvoir pondérer leur poids dans le score final. Nous avons ainsi établi que la donnée la plus importante était l'aire calculée, ensuite les moyennes et pour finir le coefficient de corrélation. La fonction développée sur cette base nous retourne une valeur qui nous permet d'avoir un jugement basé uniquement sur les données. Ainsi plus le score est proche de zéro plus la ville est proche de climat.xls. Afin toutefois de bien visualiser notre ville gagnant dans nos graphiques en bar nous soustrayons ce score à 10000 pour ainsi avoir comme meilleur score possible 10000. 
 #### Conclusion
-Pour ce qui est de Savukoski, cela concorde avec nos hypothèses. Le climat finlandais est de type continental. On peut noter que Helsinki est plus proche d'un climat continental 
-humide alors que Savukoski est plus proche d'un climat continental froid ce qui peut expliquer les différentes en 
-terme de température, mais également les similitudes entre les courbes et renforce donc notre hypothèse comme quoi il s'agit de Helsinki.
-Toutefois, il peut s'agir de Riga ou Tallinn, les capitales de la Lettonie et Estonie qui sont très proches géographiquement. Et il ne faut 
-pas omettre qu'il existe d'autres capitales, que les données ne sont potentiellement pas sur les mêmes années de données et que rien ne garantir l'intégrité de nos données comme de ceux de nos sources extérieures.
+Nous avons cherché différents facteurs permettant de détecter auprès de quelle capitale européenne le climat de notre ville témoin se rapproche. La mise en place du score permettant d'agglomérer les résultats que nous avions obtenu auparavant. La différence entre les villes de l'Europe du Nord sont assez similaire du au fait qu'elles sont proches les unes des autres et surtout de notre témoin. Les villes plus éloignés, comme Paris et Athènes pour le coup ont bien un score éloigné de notre jeu de données. Au final, la ville la plus proche de notre témoin est celle de Helsinski, la capitale de la Finlande.
+
+Cependant, il est important de noter que ce résultat se base uniquement sur les données que nous avions et que de ce fait, il existe peut-être une ville qui aurait un score plus proche de notre ville témoin. De plus, nous avons essayé d'utiliser les données datant de l'année 2018. Il se peut que nous ayons utilisé des données qui ne correspondaient pas à la même année et que les données que nous avons utilisés soient erronnés.
+
 
 # Sources de données
-
 - https://en.ilmatieteenlaitos.fi/download-observations
 - https://www.historique-meteo.net/europe/lettonie/riga/2018/
 - https://www.historique-meteo.net/europe/estonie/tallinn/2018/
