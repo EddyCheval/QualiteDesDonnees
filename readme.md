@@ -49,8 +49,13 @@ La donnée est donc globalement fiable même après la correction des erreurs.
 ### Déterminer le type de climat de climat.xls
 
 #### Démarche
-En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut constater que la température est plus rude chez Savukoski Kirkonkyla et donc que la position de climat.xls doit être plus au sud. 
-Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données météorologique d'Helsinki et d'autres capitales européennes.
+
+##### Observation
+En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut constater que la température est plus rude chez Savukoski Kirkonkyla et 
+donc que la position de climat.xls doit être plus au sud. 
+Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données
+météorologique d'Helsinki et d'autres capitales européennes.
+
 Parmis ces capitales, nous avons choisit celles des pays suivants :
 - France & Grèce, des pays relativement éloignés afin de confirmer que notre jeu de données correspond bien à l'Europe du nord. Cela permet aussi de vérifier que nos calculs sont cohérent en utilisant des valeurs bien différentes.
 - Suède, Estonie, Lettonie, des pays de la même zone que notre jeu de données afin de situer un peu plus précisément le type de climat de celui-ci.
@@ -64,10 +69,23 @@ Nous constatons 5°C de différence en moyenne à Helsinki avec un début d'ann�
 Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien contrairement à la courbe de Paris ou Athènes qui sont constamment au-dessus.
 Elles sont donc probablement situées dans la même région du monde (dans notre cas la Finlande). 
 
-Nous avons aussi choisit de calculer l'aire entre les courbes de nos capitales et celle de notre jeu de données. Plus l'écart entre les courbes est faible et plus la probabilité que nous ayons à faire à des climats similaires est forte. Pour cela, nous avons choisit d'utiliser une méthode basée sur l'intégrale. Nous avions choisi d'utiliser la méthode des trapèzes dans un premier temps mais celle-ci nous donnait des résultats qui ne nous paraissait pas correcte. Nous avons choisit une méthode déterminant les intersections entre les courbes pour déterminer l'aire entre chacune de ces sections afin de gérer les aires de manières "absolues". En effet, dans le cas ou deux courbes se croisent, il ne faudrait pas que les aires puissent s'annuler (bien qu'une aire n'est normalement pas négative). 
+##### Analyse
 
-Afin d'avoir un résultat correcte nous avons choisit de mettre en place un système de scoring. Ce score nous permettera de déterminer quelle sera la ville la plus proche et se base sur diverses informations, obtenus précédement. Parmis celle-ci, nous retrouver l'aire que nous venons de calculer mais aussi le coefficient de corrélation.
+Une fois l'observation réalisée, notre choix s'est porté vers helsinki, mais nous n'avons pas de réelles données pour prouver ou réfutée notre hypothèse. Nous avons donc choisi de calculer quelques indicateurs pour pouvoir en tirer de réelles conclusions. Nous sommes donc partie sur trois indicateurs différents :
 
+- La moyenne des différences de température entre climat.xls et nos capitales (annuelle et mensuelle) 
+- Le coefficient de corrélation entre les séries de données
+- L'aire entre la courbe tracée par climat.xls et celle de chacune des capitales
+
+Voyons désormais ce que nous avons pus tirer de ces informations.
+
+La première donné est la moyenne des différences obtenue en soustrayant aux données de chaque capitale, les données de climat.xls pour ensuite réaliser la moyenne des différences. Ainsi plus cette moyenne est proche de 0 plus les deux villes ont des climats proches, et donc, on peut supposer qu'elles sont une seule et même ville. Pour plus de détail, nous avons réaliser cela par mois et pour l'année entière.
+
+Ensuite, nous avons constaté que cette donnée ne se suffisait pas à elle-même, car les capitales Helsinki, Tallinn et Riga avait des données très proches. Pour essayer d'avoir d'avantages de données sur lesquelles s'appuyer, nous avons également cherché à calculer le coefficient de corrélation entre notre cible et nos capitales. Malheureusement, les résultats étaient encore très similaires et ne suivaient pas exactement la même tendance que précédemment. Nous avons donc cherché à aller plus loin.  
+
+Nous avons aussi choisi de calculer l'aire entre les courbes de nos capitales et celle de notre jeu de données. Plus l'écart entre les courbes est faible et plus la probabilité que nous ayons à faire à des climats similaires est forte. Pour cela, nous avons choisi d'utiliser une méthode basée sur l'intégrale. Nous avions choisi d'utiliser la méthode des trapèzes dans un premier temps, mais celle-ci nous donnait des résultats qui ne nous paraissait pas correcte. Nous avons choisi une méthode déterminant les intersections entre les courbes pour déterminer l'aire entre chacune de ces sections afin de gérer les aires de manière absolue". En effet, dans le cas ou deux courbes se croisent, il ne faudrait pas que les aires puissent s'annuler comme cela peut arriver dans certains calculs(bien qu'une aire n'est normalement pas négative). Ces résultats nous ont permis de discerner des tendances bien plus nettes. Toutefois, nous ne pouvons réaliser de prédiction en se basant sur ces informations séparément et notre jugement éventuellement biaisé.
+
+Ainsi, afin d'avoir un résultat correct, nous avons choisi de mettre en place un système de scoring. Ce score nous permettra de déterminer quelle sera la ville la plus proche et se base sur les diverses informations, obtenues précédemment. Pour cela, il nous a fallu définir l'importance de ses différents critères afin de pouvoir pondérer leur poids dans le score final. Nous avons ainsi établi que la donnée la plus importante était l'aire calculée, ensuite les moyennes et pour finir le coefficient de corrélation. La fonction développée sur cette base nous retourne une valeur qui nous permet d'avoir un jugement basé uniquement sur les données. Ainsi plus le score est proche de zéro plus la ville est proche de climat.xls. Afin toutefois de bien visualiser notre ville gagnant dans nos graphiques en bar nous soustrayons ce score à 10000 pour ainsi avoir comme meilleur score possible 10000. 
 #### Conclusion
 Nous avons cherché différents facteurs permettant de détecter auprès de quelle capitale européenne le climat de notre ville témoin se rapproche. La mise en place du score permettant d'agglomérer les résultats que nous avions obtenu auparavant. La différence entre les villes de l'Europe du Nord sont assez similaire du au fait qu'elles sont proches les unes des autres et surtout de notre témoin. Les villes plus éloignés, comme Paris et Athènes pour le coup ont bien un score éloigné de notre jeu de données. Au final, la ville la plus proche de notre témoin est celle de Helsinski, la capitale de la Finlande.
 
