@@ -342,13 +342,12 @@ print(df_climat_flatten['Données annuelles'].corr(df_france["tmoy"],method="spe
 print(df_climat_flatten['Données annuelles'].corr(df_suede["TEMPERATURE"],method="spearman"))
 print(df_climat_flatten['Données annuelles'].corr(df_grece["TEMPERATURE"],method="spearman"))
 
-area_hel = np.trapz(df_helHar["Air temperature (degC)"].sort_values(),df_climat_flatten['Données annuelles'].sort_values())
+area_hel = np.trapz(df_helHar["Air temperature (degC)"],df_climat_flatten['Données annuelles'])
 print("area =", area_hel)
-area_tal = np.trapz(df_estonie["TEMPERATURE"].sort_values(),df_climat_flatten['Données annuelles'].sort_values())
+area_tal = np.trapz(df_estonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
 print("area =", area_tal)
-area_ri = np.trapz(df_lettonie["TEMPERATURE"].sort_values(),df_climat_flatten['Données annuelles'].sort_values())
+area_ri = np.trapz(df_lettonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
 print("area =", area_ri)
-
 """Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
 
 Corr_estonie = df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"])
@@ -359,7 +358,7 @@ df = pd.DataFrame([])
 df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
 df["Tallinn"] =df_estonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
 df["Riga"] =df_lettonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
-df["Temoin"] =df_climat_flatten['Données annuelles']-df_climat_flatten['Données annuelles'].sort_values()
+df["Temoin"] =df_climat_flatten['Données annuelles']-df_climat_flatten['Données annuelles']
 plot = df.plot(figsize=(20,10))
 plt.subplots_adjust(bottom=0.3)
 tt = plt.title(f"Différence de température entre climat.xls et des capitales européennes (proches)")
