@@ -321,7 +321,39 @@ plt.pause(0.001)
 input("Press [enter] to continue.")
 
 
+print(df_climat_flatten['Données annuelles'].corr(df_helHar["Air temperature (degC)"]))
+print(df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"]))
+print(df_climat_flatten['Données annuelles'].corr(df_lettonie["TEMPERATURE"]))
+print(df_climat_flatten['Données annuelles'].corr(df_france["tmoy"]))
+print(df_climat_flatten['Données annuelles'].corr(df_suede["TEMPERATURE"]))
+print(df_climat_flatten['Données annuelles'].corr(df_grece["TEMPERATURE"]))
+
+print(df_climat_flatten['Données annuelles'].corr(df_helHar["Air temperature (degC)"],method="kendall"))
+print(df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"],method="kendall"))
+print(df_climat_flatten['Données annuelles'].corr(df_lettonie["TEMPERATURE"],method="kendall"))
+print(df_climat_flatten['Données annuelles'].corr(df_france["tmoy"],method="kendall"))
+print(df_climat_flatten['Données annuelles'].corr(df_suede["TEMPERATURE"],method="kendall"))
+print(df_climat_flatten['Données annuelles'].corr(df_grece["TEMPERATURE"],method="kendall"))
+
+print(df_climat_flatten['Données annuelles'].corr(df_helHar["Air temperature (degC)"],method="spearman"))
+print(df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"],method="spearman"))
+print(df_climat_flatten['Données annuelles'].corr(df_lettonie["TEMPERATURE"],method="spearman"))
+print(df_climat_flatten['Données annuelles'].corr(df_france["tmoy"],method="spearman"))
+print(df_climat_flatten['Données annuelles'].corr(df_suede["TEMPERATURE"],method="spearman"))
+print(df_climat_flatten['Données annuelles'].corr(df_grece["TEMPERATURE"],method="spearman"))
+
+area_hel = np.trapz(df_helHar["Air temperature (degC)"],df_climat_flatten['Données annuelles'])
+print("area =", area_hel)
+area_tal = np.trapz(df_estonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
+print("area =", area_tal)
+area_ri = np.trapz(df_lettonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
+print("area =", area_ri)
 """Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
+
+Corr_estonie = df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"])
+Corr_lettonie = df_climat_flatten['Données annuelles'].corr(df_lettonie["TEMPERATURE"])
+Corr_HelMar = df_climat_flatten['Données annuelles'].corr(df_helHar["Air temperature (degC)"])
+
 df = pd.DataFrame([])
 df["Helsinki"] =df_helHar["Air temperature (degC)"]-df_climat_flatten['Données annuelles']
 df["Tallinn"] =df_estonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
@@ -329,20 +361,37 @@ df["Riga"] =df_lettonie["TEMPERATURE"]-df_climat_flatten['Données annuelles']
 df["Temoin"] =df_climat_flatten['Données annuelles']-df_climat_flatten['Données annuelles']
 plot = df.plot(figsize=(20,10))
 plt.subplots_adjust(bottom=0.3)
-tt = plt.title(f"Différence  de température entre climat.xls et des capitales européennes (proches)")
+tt = plt.title(f"Différence de température entre climat.xls et des capitales européennes (proches)")
 axbox = plt.axes([0.2, 0.05, 0.65, 0.15])
-text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
-                                      "Statistique Tallinn       : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
-                                      "Statistique Riga          : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {}\n"
-                                    .format(round(np.abs(df["Helsinki"]).mean(),2),df["Helsinki"].max(),df["Helsinki"].min(),
-                                            round(np.abs(df["Tallinn"]).mean(),2),df["Tallinn"].max(),df["Tallinn"].min(),
-                                            round(np.abs(df["Riga"]).mean(),2),df["Riga"].max(),df["Riga"].min()))
+text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {} Cofficient de corrélation : {}\n"
+                                      "Statistique Tallinn       : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {} Cofficient de corrélation : {}\n"
+                                      "Statistique Riga          : Différence moyenne (abs) : {} Différence maximun : {} Différence minimun : {} Cofficient de corrélation : {}\n"
+                                    .format(round(np.abs(df["Helsinki"]).mean(),2),df["Helsinki"].max(),df["Helsinki"].min(),round(Corr_HelMar,2),
+                                            round(np.abs(df["Tallinn"]).mean(),2),df["Tallinn"].max(),df["Tallinn"].min(),round(Corr_estonie,2),
+                                            round(np.abs(df["Riga"]).mean(),2),df["Riga"].max(),df["Riga"].min(),round(Corr_lettonie,2)))
 plot.set_xlabel("Jour")
 plot.set_ylabel("Différence de température °C")
 plt.show()
 
 plt.pause(0.001)
 input("Press [enter] to continue.")
+
+df = pd.DataFrame([])
+df["Helsinki"] =df_helHar["Air temperature (degC)"]
+df["Tallinn"] =df_estonie["TEMPERATURE"]
+df["Riga"] =df_lettonie["TEMPERATURE"]
+df["Temoin"] =df_climat_flatten['Données annuelles']
+plot = df.plot(figsize=(20,10))
+plt.subplots_adjust(bottom=0.3)
+tt = plt.title(f"Différence de température entre climat.xls et des capitales européennes (proches)")
+axbox = plt.axes([0.2, 0.05, 0.65, 0.15])
+text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Aire Trapz : {}\n"
+                                      "Statistique Tallinn       : Aire Trapz : {}\n"
+                                      "Statistique Riga          : Aire Trapz : {}\n"
+                                    .format(area_hel,area_tal,area_ri))
+plot.set_xlabel("Jour")
+plot.set_ylabel("Différence de température °C")
+plt.show()
 
 """
 En comparant les données d'Helsinki et d'autres capitales que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.
