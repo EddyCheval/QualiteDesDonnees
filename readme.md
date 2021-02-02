@@ -33,7 +33,7 @@ Dans le jeu de données SI - erreur, on peut y distinguer deux types d'erreur :
 Pour répondre à ces deux problématiques, nous allons employer deux méthodes :
 - La première méthode consiste à convertir toutes les valeurs non-numérique en NaN
 - La seconde méthode consiste à utiliser l'écart interquartile pour évaluer si une valeur est incohérente vis-à-vis des valeurs du mois correspondant. 
-On définit l'incohérence en fonction d'un paramètre laissé à l'appréciation de chacun de la définition d'un outliner.(Dans notree cas la valeur est 3)
+On définit l'incohérence en fonction d'un paramètre laissé à l'appréciation de chacun de la définition d'un outliner.(Dans notre cas la valeur est 3)
 
 Ensuite, une fois que toutes les valeurs incohérentes sont transformées en NaN, nous pouvons mettre à l'œuvre notre stratégie visant à rendre cohérentes ces valeurs. 
 S'agissant de la température des villes, on peut supposer qu'il existe un lien fort entre la température des jours J, J-1 et J+1. 
@@ -46,7 +46,7 @@ On remarque, une fois les moyennes faites, qu'à l'échelle de la donnée annuel
 La donnée est donc globalement fiable même après la correction des erreurs.
 
 
-### Déterminer le type de climat de Savukoski
+### Déterminer le type de climat de climat.xls
 
 #### Démarche
 En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut constater que la température est plus rude chez Savukoski Kirkonkyla et 
@@ -62,10 +62,13 @@ En effet, nous pouvons voir des similitudes entre les courbes du climat et des d
 (Malgré quelques décalages notamment sur le pique de froid du début d'année. On peut supposer qu'il s'agit d'une année différente ou de données alterées.) 
 mais également des similitudes au niveau des maximums et minimums.
 
-Nous constatons 5°C de différence en moyenne à Helsinki avec un début d'année beaucoup plus chaud comme la pluspart des capitales testées.
-Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien contrairement à la courbe de paris ou athenes qui sont constamment au dessus.
+Nous constatons 5°C de différence en moyenne à Helsinki avec un début d'année beaucoup plus chaud comme la plupart des capitales testées.
+Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien contrairement à la courbe de Paris ou Athènes qui sont constamment au-dessus.
 Elles sont donc probablement situées dans la même région du monde (dans notre cas la Finlande). 
 
+Nous avons aussi choisit de calculer l'aire entre les courbes de nos capitales et celle de notre jeu de données. Plus l'écart entre les courbes est faible et plus la probabilité que nous ayons à faire à des climats similaires est forte. Pour cela, nous avons choisit d'utiliser une méthode basée sur l'intégrale. Nous avions choisi d'utiliser la méthode des trapèzes dans un premier temps mais celle-ci nous donnait des résultats qui ne nous paraissait pas correcte. Nous avons choisit une méthode déterminant les intersections entre les courbes pour déterminer l'aire entre chacune de ces sections afin de gérer les aires de manières "absolues". En effet, dans le cas ou deux courbes se croisent, il ne faudrait pas que les aires puissent s'annuler (bien qu'une aire n'est normalement pas négative). 
+
+Afin d'avoir un résultat correcte nous avons choisit de mettre en place un système de scoring. Ce score nous permettera de déterminer quelle sera la ville la plus proche et se base sur diverses informations, obtenus précédement. Parmis celle-ci, nous retrouver l'aire que nous venons de calculer mais aussi le coefficient de corrélation.
 
 #### Conclusion
 Pour ce qui est de Savukoski, cela concorde avec nos hypothèses. Le climat finlandais est de type continental. On peut noter que Helsinki est plus proche d'un climat continental 
