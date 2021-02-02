@@ -91,8 +91,8 @@ Nous avons cherché différents facteurs permettant de détecter auprès de quel
 
 Cependant, il est important de noter que ce résultat se base uniquement sur les données que nous avions et que de ce fait, il existe peut-être une ville qui aurait un score plus proche de notre ville témoin. De plus, nous avons essayé d'utiliser les données datant de l'année 2018. Il se peut que nous ayons utilisé des données qui ne correspondaient pas à la même année et que les données que nous avons utilisés soient erronnés.
 
-# Sources de donnnées
 
+# Sources de données
 - https://en.ilmatieteenlaitos.fi/download-observations
 - https://www.historique-meteo.net/europe/lettonie/riga/2018/
 - https://www.historique-meteo.net/europe/estonie/tallinn/2018/
