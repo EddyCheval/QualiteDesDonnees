@@ -45,6 +45,9 @@ En utilisant cette méthode, on remarque que globalement les valeurs sont proche
 On remarque, une fois les moyennes faites, qu'à l'échelle de la donnée annuel la différence est moindre (-0.011) et que les différences en questions sont très proches de 0 avec une moyenne de -0.6 °C. 
 La donnée est donc globalement fiable même après la correction des erreurs.
 
+|Données altérées|Données propres|
+|---|---|
+|![Données altérées](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_climat_annuel_error.PNG?raw=true)|![Données propres](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_climat_annuel.PNG?raw=true)|
 
 ### Déterminer le type de climat de climat.xls
 
@@ -53,8 +56,7 @@ La donnée est donc globalement fiable même après la correction des erreurs.
 ##### Observation
 En comparant climat.xls avec les données de Savukoski Kirkonkyla, on peut constater que la température est plus rude chez Savukoski Kirkonkyla et 
 donc que la position de climat.xls doit être plus au sud. 
-Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données
-météorologique d'Helsinki et d'autres capitales européennes.
+Ainsi, s'il s'agit d'une capitale on peut supposer qu'il s'agit d'Helsinki, la capital de la Finlande. Pour vérifier cette hypothèse, nous sommes allez chercher des données météorologique d'Helsinki et d'autres capitales européennes.
 
 Parmis ces capitales, nous avons choisit celles des pays suivants :
 - France & Grèce, des pays relativement éloignés afin de confirmer que notre jeu de données correspond bien à l'Europe du nord. Cela permet aussi de vérifier que nos calculs sont cohérent en utilisant des valeurs bien différentes.
@@ -81,13 +83,20 @@ Voyons désormais ce que nous avons pus tirer de ces informations.
 
 La première donné est la moyenne des différences obtenue en soustrayant aux données de chaque capitale, les données de climat.xls pour ensuite réaliser la moyenne des différences. Ainsi plus cette moyenne est proche de 0 plus les deux villes ont des climats proches, et donc, on peut supposer qu'elles sont une seule et même ville. Pour plus de détail, nous avons réaliser cela par mois et pour l'année entière.
 
+![Calcul des aires](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_climat_toutes_villes_difference_temoin.png?raw=true)
+
 Ensuite, nous avons constaté que cette donnée ne se suffisait pas à elle-même, car les capitales Helsinki, Tallinn et Riga avait des données très proches. Pour essayer d'avoir d'avantages de données sur lesquelles s'appuyer, nous avons également cherché à calculer le coefficient de corrélation entre notre cible et nos capitales. Malheureusement, les résultats étaient encore très similaires et ne suivaient pas exactement la même tendance que précédemment. Nous avons donc cherché à aller plus loin.  
 
 Nous avons aussi choisi de calculer l'aire entre les courbes de nos capitales et celle de notre jeu de données. Plus l'écart entre les courbes est faible et plus la probabilité que nous ayons à faire à des climats similaires est forte. Pour cela, nous avons choisi d'utiliser une méthode basée sur l'intégrale. Nous avions choisi d'utiliser la méthode des trapèzes dans un premier temps, mais celle-ci nous donnait des résultats qui ne nous paraissait pas correcte. Nous avons choisi une méthode déterminant les intersections entre les courbes pour déterminer l'aire entre chacune de ces sections afin de gérer les aires de manière absolue". En effet, dans le cas ou deux courbes se croisent, il ne faudrait pas que les aires puissent s'annuler comme cela peut arriver dans certains calculs(bien qu'une aire n'est normalement pas négative). Ces résultats nous ont permis de discerner des tendances bien plus nettes. Toutefois, nous ne pouvons réaliser de prédiction en se basant sur ces informations séparément et notre jugement éventuellement biaisé.
 
+![Calcul des aires](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_climat_villes_proches.png?raw=true)
+
 Ainsi, afin d'avoir un résultat correct, nous avons choisi de mettre en place un système de scoring. Ce score nous permettra de déterminer quelle sera la ville la plus proche et se base sur les diverses informations, obtenues précédemment. Pour cela, il nous a fallu définir l'importance de ses différents critères afin de pouvoir pondérer leur poids dans le score final. Nous avons ainsi établi que la donnée la plus importante était l'aire calculée, ensuite les moyennes et pour finir le coefficient de corrélation. La fonction développée sur cette base nous retourne une valeur qui nous permet d'avoir un jugement basé uniquement sur les données. Ainsi plus le score est proche de zéro plus la ville est proche de climat.xls. Afin toutefois de bien visualiser notre ville gagnant dans nos graphiques en bar nous soustrayons ce score à 10000 pour ainsi avoir comme meilleur score possible 10000. 
+
 #### Conclusion
 Nous avons cherché différents facteurs permettant de détecter auprès de quelle capitale européenne le climat de notre ville témoin se rapproche. La mise en place du score permettant d'agglomérer les résultats que nous avions obtenu auparavant. La différence entre les villes de l'Europe du Nord sont assez similaire du au fait qu'elles sont proches les unes des autres et surtout de notre témoin. Les villes plus éloignés, comme Paris et Athènes pour le coup ont bien un score éloigné de notre jeu de données. Au final, la ville la plus proche de notre témoin est celle de Helsinski, la capitale de la Finlande.
+
+![Scoring](https://github.com/EddyCheval/QualiteDesDonnees/blob/master/images/graphique_resultats_scores.PNG?raw=true)
 
 Cependant, il est important de noter que ce résultat se base uniquement sur les données que nous avions et que de ce fait, il existe peut-être une ville qui aurait un score plus proche de notre ville témoin. De plus, nous avons essayé d'utiliser les données datant de l'année 2018. Il se peut que nous ayons utilisé des données qui ne correspondaient pas à la même année et que les données que nous avons utilisés soient erronnés.
 
