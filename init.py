@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import scipy as scp
 from Index import Index
-from function import suppr_outliners,hover
+from function import get_area_between_curves, hover, suppr_outliners
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button,TextBox
 
@@ -342,12 +342,24 @@ print(df_climat_flatten['Données annuelles'].corr(df_france["tmoy"],method="spe
 print(df_climat_flatten['Données annuelles'].corr(df_suede["TEMPERATURE"],method="spearman"))
 print(df_climat_flatten['Données annuelles'].corr(df_grece["TEMPERATURE"],method="spearman"))
 
-area_hel = np.trapz(df_helHar["Air temperature (degC)"],df_climat_flatten['Données annuelles'])
-print("area =", area_hel)
-area_tal = np.trapz(df_estonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
-print("area =", area_tal)
-area_ri = np.trapz(df_lettonie["TEMPERATURE"],df_climat_flatten['Données annuelles'])
-print("area =", area_ri)
+area_hel = round(get_area_between_curves(df_helHar["Air temperature (degC)"], df_climat_flatten['Données annuelles']), 2)
+area_tal = round(get_area_between_curves(df_estonie["TEMPERATURE"], df_climat_flatten['Données annuelles']), 2)
+area_ri = round(get_area_between_curves(df_lettonie["TEMPERATURE"], df_climat_flatten['Données annuelles']), 2)
+print("Area Helsinki =", area_hel)
+print("Area Tallinn =", area_tal)
+print("Area Riga =", area_ri)
+
+"""
+area_climat = np.trapz(df_climat_flatten['Données annuelles']) 
+print("area =", area_climat)
+area_hel = np.trapz(df_helHar["Air temperature (degC)"])
+print("area =", area_hel, "difference =", area_hel - area_climat)
+area_tal = np.trapz(df_estonie["TEMPERATURE"])
+print("area =", area_tal, "difference =", area_tal - area_climat)
+area_ri = np.trapz(df_lettonie["TEMPERATURE"])
+print("area =", area_ri, "difference =", area_ri - area_climat)
+"""
+
 """Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
 
 Corr_estonie = df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"])
@@ -385,9 +397,9 @@ plot = df.plot(figsize=(20,10))
 plt.subplots_adjust(bottom=0.3)
 tt = plt.title(f"Différence de température entre climat.xls et des capitales européennes (proches)")
 axbox = plt.axes([0.2, 0.05, 0.65, 0.15])
-text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Aire Trapz : {}\n"
-                                      "Statistique Tallinn       : Aire Trapz : {}\n"
-                                      "Statistique Riga          : Aire Trapz : {}\n"
+text_box = TextBox(axbox, '', initial="Statistique Helsinki     : Aire : {}\n"
+                                      "Statistique Tallinn       : Aire : {}\n"
+                                      "Statistique Riga          : Aire : {}\n"
                                     .format(area_hel,area_tal,area_ri))
 plot.set_xlabel("Jour")
 plot.set_ylabel("Différence de température °C")
