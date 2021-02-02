@@ -92,7 +92,7 @@ terme de température, mais également les similitudes entre les courbes et renf
 Toutefois, il peut s'agir de Riga ou Tallinn, les capitales de la Lettonie et Estonie qui sont très proches géographiquement. Et il ne faut 
 pas omettre qu'il existe d'autres capitales, que les données ne sont potentiellement pas sur les mêmes années de données et que rien ne garantir l'intégrité de nos données comme de ceux de nos sources extérieures.
 
-# Source de donnnées
+# Sources de données
 
 - https://en.ilmatieteenlaitos.fi/download-observations
 - https://www.historique-meteo.net/europe/lettonie/riga/2018/
