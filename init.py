@@ -349,17 +349,6 @@ print("Area Helsinki =", area_hel)
 print("Area Tallinn =", area_tal)
 print("Area Riga =", area_ri)
 
-"""
-area_climat = np.trapz(df_climat_flatten['Données annuelles']) 
-print("area =", area_climat)
-area_hel = np.trapz(df_helHar["Air temperature (degC)"])
-print("area =", area_hel, "difference =", area_hel - area_climat)
-area_tal = np.trapz(df_estonie["TEMPERATURE"])
-print("area =", area_tal, "difference =", area_tal - area_climat)
-area_ri = np.trapz(df_lettonie["TEMPERATURE"])
-print("area =", area_ri, "difference =", area_ri - area_climat)
-"""
-
 """Comparaison des différences de températures entre climat.xls et les capitales européennes du nord-est"""
 
 Corr_estonie = df_climat_flatten['Données annuelles'].corr(df_estonie["TEMPERATURE"])
