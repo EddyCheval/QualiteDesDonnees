@@ -1,3 +1,5 @@
+import numpy as np
+
 def update_annot(event,annot,df):
   annot.xy = (round(event.xdata,0),round(event.ydata,0))
   valIndex = int(round(event.xdata))
@@ -32,3 +34,22 @@ def suppr_outliners(series):
   Q3 = series.quantile(0.75)
   IQR = Q3 - Q1
   return series[series.between(Q1-3*IQR,Q3+3*IQR)] #la valeur 3 est modifiée en fonction du seuil que l'on veux définir comme outliner
+
+
+def get_area_between_curves(df_pays, df_climat):
+  x = df_pays.index
+  y1 = df_pays.to_numpy()
+  y2 = df_climat.to_numpy()
+
+  z = y1-y2
+  dx = x[1:] - x[:-1]
+  cross_test = np.sign(z[:-1] * z[1:])
+
+  dx_intersect = - dx / (z[1:] - z[:-1]) * z[:-1]
+
+  areas_pos = abs(z[:-1] + z[1:]) * 0.5 * dx # signs of both z are same
+
+  areas_neg = 0.5 * dx_intersect * abs(z[:-1]) + 0.5 * (dx - dx_intersect) * abs(z[1:])
+
+  areas = np.where(cross_test < 0, areas_neg, areas_pos)
+  return np.sum(areas)
