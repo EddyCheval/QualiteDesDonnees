@@ -63,9 +63,8 @@ Parmis ces capitales, nous avons choisit celles des pays suivants :
 - Suède, Estonie, Lettonie, des pays de la même zone que notre jeu de données afin de situer un peu plus précisément le type de climat de celui-ci.
 
 En comparant les données d'Helsinki et d'autres capitales que nous avons trouvé sur Internet, on peut renforcer cette hypothèse.
-En effet, nous pouvons voir des similitudes entre les courbes du climat et des données trouvées sur Internet
-(Malgré quelques décalages notamment sur le pique de froid du début d'année. On peut supposer qu'il s'agit d'une année différente ou de données alterées.) 
-mais également des similitudes au niveau des maximums et minimums.
+En effet, nous pouvons voir des similitudes entre les courbes du climat et des données trouvées sur Internet au niveau des maximums et minimums.
+Malgré quelques décalages notamment sur le pique de froid du début d'année, on peut supposer qu'il s'agit d'une année différente ou de données alterées.
 
 Nous constatons 5°C de différence en moyenne à Helsinki avec un début d'année beaucoup plus chaud comme la plupart des capitales testées.
 Toutefois on remarque que c'est bien le même type de climat car les deux courbes se suivent relativement bien contrairement à la courbe de Paris ou Athènes qui sont constamment au-dessus.
